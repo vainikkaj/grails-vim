@@ -100,11 +100,11 @@ function! s:GrailsDisplayTests()
     " Get the name of the current file we're on
     " TODO: Maybe we'll prompt someday
     let currentItem =  expand("%:t:r")
-    let currentItem = substitute(currentItem, "Tests$", "", "")
+    let currentItem = substitute(currentItem, "Spec$", "", "")
     " If we're in a test report, we'll have all kinds of garbage at the front.
     " Remove it.
     let currentItem = substitute(currentItem, "^.*TEST-.*-", "", "")
-    let currentItem = currentItem . "Tests.groovy"
+    let currentItem = currentItem . "Spec.groovy"
     echo "Opening item: " . currentItem
     call s:GrailsOpenItem(currentItem)
 endfunction
@@ -175,7 +175,7 @@ function! s:GrailsGetCurrentItem()
         " Capitalize
         let currentItem = toupper(currentItem[0]) . strpart(currentItem, 1)
     else
-        let currentItem = substitute(fileNameBase, "\\(FunctionalTests\\|ControllerTests\\|ServiceTests\\|Service\\|Controller\\|Tests\\)$", "", "")
+        let currentItem = substitute(fileNameBase, "\\(FunctionalTests\\|ControllerTests\\|ServiceTests\\|Service\\|Controller\\|Tests\\|Spec\\|ControllerSpec\\|ServiceSpec\\|FunctionalSpec\\)$", "", "")
         let currentItem = s:GrailsStripTest(currentItem)
     endif
     
