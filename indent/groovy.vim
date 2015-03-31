@@ -40,6 +40,13 @@ function! SkipGroovyBlanksAndComments(startline)
       endif
     elseif getline(lnum) =~ '^\s*//'
       let lnum = lnum - 1
+    "
+    " spock keywords are skipped
+    "
+    " seems to require v:lnum as getline argument
+    "
+    elseif getline(v:lnum) =~ '^\s*\(given\|when\|then\|setup\|expect\|where\|and\).*'
+      let lnum = lnum - 1
     else
       break
     endif
@@ -57,7 +64,6 @@ function GetGroovyIndent()
   if getline(v:lnum) =~ '^\s*\*'
     return theIndent
   endif
-
 
   " find start of previous line, in case it was a continuation line
   let lnum = SkipGroovyBlanksAndComments(v:lnum - 1)
